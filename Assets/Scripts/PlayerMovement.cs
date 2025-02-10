@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("movement")]
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
+    private float moveSpeed;
     [SerializeField] private Transform orientation;
 
     [SerializeField] private float groundDrag;
@@ -24,12 +25,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
     private Rigidbody rigidBody;
 
+    public MovementState moveState;
+    public enum MovementState
+    {
+        walking,
+        running,
+        airborne
+    }    
+
     private float horizontalInput;
     private float verticalInput;
 
     private bool isRunning;
 
     Vector3 moveDirection;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -74,6 +84,28 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void StateHandler()
+    {
+        // Running state
+        if(isGrounded && Input.GetButtonDown("leftStickButton"))
+        {
+            moveState = MovementState.running;
+            moveSpeed = runSpeed;
+        }
+
+        // Walking state
+        else if (isGrounded && !isRunning)
+        {
+            moveState = MovementState.walking;
+            moveSpeed = walkSpeed;
+        }
+
+        // Airborne state
+        else
+        { 
+            moveState = MovementState.airborne;
+        }
+    }
 
     private void MovePlayer()
     {
@@ -83,27 +115,13 @@ public class PlayerMovement : MonoBehaviour
         // ground movement
         if (isGrounded)
         {
-            if (isRunning)
-            {
-                rigidBody.AddForce(moveDirection.normalized * runSpeed * 10f, ForceMode.Force);
-            }
-            else
-            { 
-                rigidBody.AddForce(moveDirection.normalized * walkSpeed * 10f, ForceMode.Force);
-            }
+            rigidBody.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
 
         // air movement
         else
         {
-            if (isRunning)
-            {
-                rigidBody.AddForce(moveDirection.normalized * runSpeed * 10f * airMultiplier, ForceMode.Force);
-            }
-            else
-            {
-                rigidBody.AddForce(moveDirection.normalized * walkSpeed * 10f * airMultiplier, ForceMode.Force);
-            }
+            rigidBody.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
     }
 
@@ -113,14 +131,9 @@ public class PlayerMovement : MonoBehaviour
         Vector3 flatVelocity = new Vector3(rigidBody.linearVelocity.x, 0f, rigidBody.linearVelocity.z);
 
         // clamp max speed to moveSpeed
-        if (!isRunning && flatVelocity.magnitude > walkSpeed)
+        if (flatVelocity.magnitude > moveSpeed)
         {
-            Vector3 clampVelocity = flatVelocity.normalized * walkSpeed;
-            rigidBody.linearVelocity = new Vector3(clampVelocity.x, rigidBody.linearVelocity.y, clampVelocity.z);
-        }
-        else if (isRunning && flatVelocity.magnitude > walkSpeed)
-        {
-            Vector3 clampVelocity = flatVelocity.normalized * runSpeed;
+            Vector3 clampVelocity = flatVelocity.normalized * moveSpeed;
             rigidBody.linearVelocity = new Vector3(clampVelocity.x, rigidBody.linearVelocity.y, clampVelocity.z);
         }
     }
@@ -147,6 +160,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, ground);
 
         MyInput();
+        StateHandler();
         SpeedControl();
 
         if(isGrounded) 
