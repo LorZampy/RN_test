@@ -10,6 +10,12 @@ public class ThirdPersonCam : MonoBehaviour
 
     [SerializeField] private float rotationSpeed;
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -21,5 +27,10 @@ public class ThirdPersonCam : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        if(inputDirection != Vector3.zero )
+        {
+            playerObj.forward = Vector3.Slerp(playerObj.forward, inputDirection.normalized, Time.deltaTime * rotationSpeed);
+        }
     }
 }

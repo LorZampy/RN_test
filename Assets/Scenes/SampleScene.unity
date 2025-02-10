@@ -473,6 +473,7 @@ GameObject:
   - component: {fileID: 1159811461}
   - component: {fileID: 1159811460}
   - component: {fileID: 1159811459}
+  - component: {fileID: 1159811465}
   m_Layer: 0
   m_Name: FreeLook Camera
   m_TagString: Untagged
@@ -704,6 +705,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1159811465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159811458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19db4287655a45f4aabe64fc3805d54d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 1313615371}
+  player: {fileID: 1467766872}
+  playerObj: {fileID: 1274013692}
+  rigidBody: {fileID: 1467766873}
+  rotationSpeed: 7
 --- !u!1001 &1274013689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -838,6 +856,7 @@ GameObject:
   - component: {fileID: 1467766872}
   - component: {fileID: 1467766873}
   - component: {fileID: 1467766874}
+  - component: {fileID: 1467766875}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -912,6 +931,31 @@ CapsuleCollider:
   m_Height: 1.9868139
   m_Direction: 1
   m_Center: {x: 0, y: -0.16262406, z: -0.08972567}
+--- !u!114 &1467766875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467766871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1679fdefb815646aafa67375657415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 5
+  runSpeed: 10
+  orientation: {fileID: 1313615371}
+  groundDrag: 8
+  jumpForce: 12
+  jumpCD: 0.25
+  airMultiplier: 0.4
+  readyToJump: 0
+  playerHeight: 2
+  ground:
+    serializedVersion: 2
+    m_Bits: 1024
+  animator: {fileID: 1274013691}
 --- !u!1 &1888780158
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,7 +968,7 @@ GameObject:
   - component: {fileID: 1888780161}
   - component: {fileID: 1888780160}
   - component: {fileID: 1888780159}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -976,7 +1020,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: d2d89392030f9354baecaed71838a511, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1016,7 +1060,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
