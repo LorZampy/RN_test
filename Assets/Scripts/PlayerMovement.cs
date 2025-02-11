@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isRunning", isRunning);
         }
 
-        if (Input.GetButtonDown("leftStickButton") && animator.GetBool("isWalking"))
+        if (Input.GetButtonDown("leftStickButton") && animator.GetBool("isWalking") && isGrounded)
         {
             isRunning = !isRunning;
             animator.SetBool("isRunning", isRunning);
@@ -78,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
         {
             readyToJump = false;
             Jump();
+            animator.SetTrigger("jump");
 
             // call resetJump after a delay equal to jumpCD
             Invoke(nameof(ResetJump), jumpCD);
@@ -158,6 +159,9 @@ public class PlayerMovement : MonoBehaviour
     {
         // check ground
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, ground);
+
+        if (animator.GetBool("isGrounded") != isGrounded)
+            { animator.SetBool("isGrounded", isGrounded); }
 
         MyInput();
         StateHandler();
