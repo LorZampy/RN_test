@@ -2569,7 +2569,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 5
   runSpeed: 10
+  boostSpeed: 20
   orientation: {fileID: 1313615371}
+  boostLoadTime: 1
   groundDrag: 8
   jumpForce: 12
   jumpCD: 0.25
@@ -2900,7 +2902,7 @@ Transform:
   m_GameObject: {fileID: 1888780158}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -31.6}
+  m_LocalPosition: {x: 0, y: 0, z: -32}
   m_LocalScale: {x: 20, y: 2, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
