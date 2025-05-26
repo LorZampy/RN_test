@@ -2570,6 +2570,8 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 10
   boostSpeed: 20
+  standardRotationSpeed: 0
+  boostRotationSpeed: 0
   orientation: {fileID: 1313615371}
   boostLoadTime: 1
   groundDrag: 8
